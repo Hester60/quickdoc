@@ -29,41 +29,39 @@
         </div>
     </div>
 
-    {% if page.parameters.showHierarchy == true %}
-        {% include 'page/tabs/hierarchy/_page_hierarchy_tab.html.twig' with {'main_parent': main_parent, 'openByDefault' : page.parameters.openHierarchyByDefault } only %}
-    {% endif %}
+    <div class="row">
+        <div class="col-12 col-lg-4">
+            {% if page.parameters.showHierarchy == true %}
+                {% include 'page/tabs/hierarchy/_page_hierarchy_tab.html.twig' with {'main_parent': main_parent, 'openByDefault' : page.parameters.openHierarchyByDefault } only %}
+            {% endif %}
 
-    {% if page.parameters.showVersions == true %}
-        {% include 'page/tabs/_versions_tab.html.twig' with {'histories': main_parent.sortedPageHistories, 'openByDefault': page.parameters.openVersionsByDefault} only %}
-    {% endif %}
+            {% include 'page/tabs/todos/_todos_tab.html.twig' with { 'openByDefault': page.parameters.openTodolistByDefault, 'todo_form' : todo_form, 'page' : page } only %}
 
-    {% include 'page/tabs/todos/_todos_tab.html.twig' with { 'openByDefault': page.parameters.openTodolistByDefault, 'todo_form' : todo_form, 'page' : page } only %}
+            {% if page.parameters.showVersions == true %}
+                {% include 'page/tabs/_versions_tab.html.twig' with {'histories': main_parent.sortedPageHistories, 'openByDefault': page.parameters.openVersionsByDefault} only %}
+            {% endif %}
+        </div>
 
-    <div class="accordion mb-3" id="accordionBody">
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingBody">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseBody" aria-expanded="true" aria-controls="collapseBody">
-                    Contenu de la page
-                </button>
-            </h2>
-            <div id="collapseBody" class="accordion-collapse collapse show" aria-labelledby="headingBody"
-                 data-bs-parent="#accordionBody">
-                <div class="accordion-body">
+        <div class="col-12 col-lg-8">
+            <div class="card">
+                <div class="card-body">
                     {% if page.body is null or page.body|trim|length == 0 %}
                         <span>Le contenu de cette page est vide.</span>
                     {% else %}
                         {{ page.body|raw }}
                     {% endif %}
+                    <hr>
+                    <div class="small">Page créée
+                        le {{ page.createdAt|format_datetime('full', 'short', locale='fr') }}
+                        par {{ author(page.author) }}
+                    </div>
+                    <div class="small">Dernière modification
+                        le {{ page.updatedAt|format_datetime('full', 'short', locale='fr') }}
+                        (Version {{ page.version }})
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="small">Page créée le {{ page.createdAt|format_datetime('full', 'short', locale='fr') }}
-        par {{ author(page.author) }}
-    </div>
-    <div class="small">Dernière modification le {{ page.updatedAt|format_datetime('full', 'short', locale='fr') }}
-        (Version {{ page.version }})
     </div>
 {% endblock %}
 
