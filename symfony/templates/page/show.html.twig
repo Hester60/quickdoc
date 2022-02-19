@@ -38,7 +38,7 @@
             {% include 'page/tabs/todos/_todos_tab.html.twig' with { 'openByDefault': page.parameters.openTodolistByDefault, 'todo_form' : todo_form, 'page' : page } only %}
 
             {% if page.parameters.showVersions == true %}
-                {% include 'page/tabs/_versions_tab.html.twig' with {'histories': main_parent.sortedPageHistories, 'openByDefault': page.parameters.openVersionsByDefault} only %}
+                {% include 'page/tabs/_versions_tab.html.twig' with {'histories': page.sortedPageHistories, 'openByDefault': page.parameters.openVersionsByDefault} only %}
             {% endif %}
         </div>
 
