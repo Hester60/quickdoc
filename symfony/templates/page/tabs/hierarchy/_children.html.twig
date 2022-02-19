@@ -1,0 +1,24 @@
+{% from "macros.html.twig" import tag %}
+{% from "macros.html.twig" import active_hierarchy_page %}
+
+<li>
+    <span class="treeview-caret" data-arborescence-target="treeviewCaret">
+        {{ tag(page) }}
+        <a data-arborescence-target="treeviewLink" class="link-secondary {{ active_hierarchy_page(page) }}" href="{{ path('page_show', {'id': page.id}) }}">{{ page.name }}</a>
+    </span>
+    <ul class="treeview nested">
+        {% for child in page.children %}
+            {% if child.children|length > 0 %}
+                {% include 'page/tabs/hierarchy/_children.html.twig' with { 'page': child } only %}
+            {% else %}
+                <li>
+                    <span>
+                        {{ tag(child) }}
+                        <a class="link-secondary {{ active_hierarchy_page(child) }}" data-arborescence-target="treeviewLink"
+                           href="{{ path('page_show', {'id': child.id}) }}">{{ child.name }}</a>
+                    </span>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</li>

@@ -1,0 +1,49 @@
+{% from "macros.html.twig" import tag %}
+{% from "macros.html.twig" import active_hierarchy_page %}
+
+<div class="accordion mb-3" id="accordionHierarchy">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingHierarchy">
+            <button class="accordion-button {{ openByDefault ? '' : 'collapsed' }}"
+                    type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseHierarchy"
+                    aria-expanded="{{ openByDefault ? 'true' : 'false' }}"
+                    aria-controls="collapseParent">
+                Arborescence
+            </button>
+        </h2>
+        <div id="collapseHierarchy"
+             class="accordion-collapse collapse {{ openByDefault ? 'show' : '' }}"
+             aria-labelledby="headingHierarchy"
+             data-bs-parent="#accordionHierarchy">
+            <div class="accordion-body">
+                <ul class="treeview-main" data-controller="arborescence" data-arborescence-target="treeviewMain">
+                    <li>
+                        <span class="{{ main_parent.allDescendantPages|length > 0 ? 'treeview-caret' : '' }}" data-arborescence-target="treeviewCaret">
+                            {{ tag(main_parent) }}
+                            <a class="link-secondary {{ active_hierarchy_page(main_parent) }}" data-arborescence-target="treeviewLink"
+                               href="{{ path('page_show', {'id': main_parent.id}) }}">{{ main_parent.name }}</a>
+                        </span>
+                        <ul class="treeview nested">
+                            {% for descendant_page in main_parent.allDescendantPages %}
+                                {% if descendant_page.parent.id == main_parent.id %}
+                                    {% if descendant_page.children|length > 0 %}
+                                        {% include 'page/tabs/hierarchy/_children.html.twig' with { 'page': descendant_page } only %}
+                                    {% else %}
+                                        <li>
+                                            <span>
+                                                {{ tag(descendant_page) }}
+                                                <a class="link-secondary {{ active_hierarchy_page(descendant_page) }}" data-arborescence-target="treeviewLink"
+                                                   href="{{ path('page_show', {'id': descendant_page.id}) }}">{{ descendant_page.name }}</a>
+                                            </span>
+                                        </li>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

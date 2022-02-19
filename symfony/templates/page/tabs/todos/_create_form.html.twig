@@ -1,0 +1,6 @@
+<div class="col-12 col-lg-6 mt-2">
+    {{ form_start(todo_form, {'attr': {'class': 'd-flex '}}) }}
+    {{ form_widget(todo_form.value) }}
+    {{ form_widget(todo_form.submit, {'attr': {'class': 'ms-1 btn btn-primary'}}) }}
+    {{ form_end(todo_form) }}
+</div>

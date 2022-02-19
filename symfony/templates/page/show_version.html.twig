@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+{% from "macros.html.twig" import tag %}
+{% from "macros.html.twig" import author %}
+
+{% block title %}
+    Quickdoc - {{ page_history.name }}
+{% endblock %}
+
+{% block body %}
+    <div class="alert alert-success" role="alert">
+        Vous consultez actuellement une ancienne version (v{{ page_history.version}}) de la page <a
+                href="{{ path('page_show', {'id': page.id}) }}">{{ page.name }}</a>.<br/>
+        Il n'est pas possible de modifier une ancienne version. <br/>
+        <hr>
+        Vous pouvez <a href="{{ path('page_show', {'id': page.id}) }}">revenir à la dernière version.</a>
+    </div>
+    <div class="p-4 mb-4 bg-light rounded-3">
+        <div class="container-fluid">
+            <h1 class="display-6 fw-bold">{{ page_history.name }}</h1>
+            {% if page_history.description is not null %}
+                <hr>
+                <div class="mt-2">{{ page_history.description }}</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="accordion mb-3" id="accordionBody">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingBody">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseBody" aria-expanded="true" aria-controls="collapseBody">
+                    Contenu de la page
+                </button>
+            </h2>
+            <div id="collapseBody" class="accordion-collapse collapse show" aria-labelledby="headingBody"
+                 data-bs-parent="#accordionBody">
+                <div class="accordion-body">
+                    {% if page_history.body is null or page_history.body|trim|length == 0 %}
+                        <span>Le contenu de cette version est vide.</span>
+                    {% else %}
+                        {{ page_history.body|raw }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="small">Version {{ page_history.version}} créée le {{ page_history.createdAt|format_datetime('full', 'short', locale='fr') }}
+        par {{ author(page_history.updatedBy) }}
+    </div>
+{% endblock %}
+

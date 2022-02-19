@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Quickdoc{% endblock %}</title>
+    <link rel="icon"
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+<body class="d-flex flex-column h-100">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ path('page_browse') }}">Quickdoc</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link {{ app.request.attributes.get('_route') == 'page_browse' ? 'active' : '' }}"
+                       href="{{ path('page_browse') }}">Rechercher</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ app.request.attributes.get('_route') == 'page_create' ? 'active' : '' }}"
+                       href="{{ path('page_create') }}">Nouvelle page</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ app.request.attributes.get('_route') == 'user_edit_password' ? 'active' : '' }}"
+                       href="{{ path('user_edit_password') }}">Modifier mon mot de passe</a>
+                </li>
+            </ul>
+            <form class="d-flex" action="{{ path('page_browse') }}" method="get">
+                <input class="form-control me-2" type="search" name="term" placeholder="Rechercher ..."
+                       aria-label="Search">
+                <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</nav>
+<div class="container py-5">
+    {% include 'flashes/flashes.html.twig' %}
+    {% block body %}{% endblock %}
+</div>
+<footer class="footer mt-auto py-3 bg-light">
+    <div class="container text-center">
+        <span class="text-muted">Quickdoc 2022 - v{{ get_env_var('APP_VERSION') }}</span>
+    </div>
+</footer>
+</body>
+</html>

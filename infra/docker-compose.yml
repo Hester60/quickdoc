@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  php:
+    container_name: "php-fpm"
+    build:
+      context: ./php
+    environment:
+      - APP_ENV=${APP_ENV}
+      - APP_SECRET=${APP_SECRET}
+    volumes:
+      - ${APP_FOLDER}:/var/www
+  nginx:
+    container_name: "nginx"
+    build:
+      context: ./nginx
+    volumes:
+      - ${APP_FOLDER}:/var/www
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./logs:/var/log
+    depends_on:
+      - php
+    ports:
+      - "1008:80"
+  db:
+    container_name: "database"
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "quickdoc"
+      MYSQL_DATABASE: "quickdoc"
+      MYSQL_USER: "quickdoc"
+      MYSQL_PASSWORD: "quickdoc"
+    ports:
+      - "9906:3306"
+

@@ -1,0 +1,25 @@
+@import "~bootstrap/scss/bootstrap";
+@import '~highlight.js/styles/monokai-sublime.css';
+@import "treeview";
+
+html, body {
+  height: 100%;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+.hierarchy-page.active {
+  color: $primary;
+}
+
+pre {
+  padding: 0 !important;
+  margin: 0 0 20px 0 !important;
+  border-radius: 15px !important;
+}
+
+div.code {
+  white-space: pre;
+}

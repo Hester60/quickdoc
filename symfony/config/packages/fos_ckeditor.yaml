@@ -1,0 +1,26 @@
+# Read the documentation: https://symfony.com/doc/current/bundles/FOSCKEditorBundle/index.html
+
+
+fos_ck_editor:
+    configs:
+        main:
+            height: 500
+            language: fr
+            extraPlugins: 'codesnippet, autogrow, textmatch, autolink'
+            codeSnippet_theme: 'monokai_sublime'
+    plugins:
+        codesnippet:
+            path: 'build/ckeditor/extra-plugins/codesnippet/'
+            filename: plugin.js
+        autogrow:
+            path: 'build/ckeditor/extra-plugins/autogrow/'
+            filename: plugin.js
+        autolink:
+            path: 'build/ckeditor/extra-plugins/autolink/'
+            filename: plugin.js
+        textmatch:
+            path: 'build/ckeditor/extra-plugins/textmatch/'
+            filename: plugin.js
+twig:
+    form_themes:
+        - '@FOSCKEditor/Form/ckeditor_widget.html.twig'

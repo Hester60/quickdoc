@@ -1,0 +1,30 @@
+{% from "macros.html.twig" import todo %}
+
+<div class="accordion mb-3" id="accordionTodos">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTodos">
+            <button class="accordion-button {{ openByDefault ? '' : 'collapsed' }}"
+                    type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseTodos"
+                    aria-expanded="{{ openByDefault ? 'true' : 'false' }}"
+                    aria-controls="collapseParent">
+                Liste des tâches
+            </button>
+        </h2>
+        <div id="collapseTodos"
+             class="accordion-collapse collapse {{ openByDefault ? 'show' : '' }}"
+             aria-labelledby="headingTodos"
+             data-bs-parent="#accordionTodos">
+            <div class="accordion-body">
+                {% for todo in page.todos %}
+                    {{ todo(todo) }}
+                    {% else %}
+                    <div class="mb-2">
+                        Cette page ne possède aucune tâche à réaliser.
+                    </div>
+                {% endfor %}
+                {% include 'page/tabs/todos/_create_form.html.twig' with { 'todo_form': todo_form } only %}
+            </div>
+        </div>
+    </div>
+</div>

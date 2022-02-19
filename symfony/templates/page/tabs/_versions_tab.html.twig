@@ -1,0 +1,32 @@
+{% from "macros.html.twig" import author %}
+
+<div class="accordion mb-3" id="accordionVersions">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingVersions">
+            <button class="accordion-button {{ openByDefault ? '' : 'collapsed' }}"
+                    type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseVersions"
+                    aria-expanded="{{ openByDefault ? 'true' : 'false' }}"
+                    aria-controls="collapseParent">
+                Anciennes versions de cette page
+            </button>
+        </h2>
+        <div id="collapseVersions"
+             class="accordion-collapse collapse {{ openByDefault ? 'show' : '' }}"
+             aria-labelledby="headingVersions"
+             data-bs-parent="#accordionVersions">
+            <div class="accordion-body">
+                {% for history in histories %}
+                    <div class="mb-2">
+                        <a href="{{ path('page_show_version', {'id': history.page.id, 'version': history.version}) }}">Version {{ history.version }} - {{ history.name }}</a>
+                        <div class="small text-muted">Créée le {{ history.createdAt|format_datetime('full', 'short', locale='fr') }}
+                            par {{ author(history.updatedBy) }}</div>
+                    </div>
+                    {% if not loop.last %}
+                        <hr>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
