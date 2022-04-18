@@ -11,5 +11,27 @@
         </div>
     </div>
 
-
+    <div class="w-50">
+        <ol class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">Dernières pages créées</div>
+                </div>
+            </li>
+            {% for page in last_created_pages %}
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold"><a href="{{ path('page_show', {'id': page.id}) }}">{{ page.name }}</a></div>
+                        {{ page.description ?? 'Aucune description pour cette page' }}
+                    </div>
+                </li>
+                {% else %}
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            Il n'y actuellement aucune page ! <a href="{{ path('page_create') }}">Créer une page</a>
+                        </div>
+                    </li>
+            {% endfor %}
+        </ol>
+    </div>
 {% endblock %}
