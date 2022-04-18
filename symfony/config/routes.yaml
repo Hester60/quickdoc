@@ -2,6 +2,6 @@ root:
   path: /
   controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
   defaults:
-    route: page_browse
+    route: dashboard
     permanent: true
     keepRequestMethod: true
