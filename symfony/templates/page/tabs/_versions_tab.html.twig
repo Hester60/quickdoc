@@ -18,13 +18,17 @@
             <div class="accordion-body">
                 {% for history in histories %}
                     <div class="mb-2">
-                        <a href="{{ path('page_show_version', {'id': history.page.id, 'version': history.version}) }}">Version {{ history.version }} - {{ history.name }}</a>
-                        <div class="small text-muted">Créée le {{ history.createdAt|format_datetime('full', 'short', locale='fr') }}
+                        <a href="{{ path('page_show_version', {'id': history.page.id, 'version': history.version}) }}">Version {{ history.version }}
+                            - {{ history.name }}</a>
+                        <div class="small text-muted">Créée
+                            le {{ history.createdAt|format_datetime('full', 'short', locale='fr') }}
                             par {{ author(history.updatedBy) }}</div>
                     </div>
                     {% if not loop.last %}
                         <hr>
                     {% endif %}
+                {% else %}
+                    Effectuez une modification pour voir apparaître les différentes versions dans cet onglet.
                 {% endfor %}
             </div>
         </div>
